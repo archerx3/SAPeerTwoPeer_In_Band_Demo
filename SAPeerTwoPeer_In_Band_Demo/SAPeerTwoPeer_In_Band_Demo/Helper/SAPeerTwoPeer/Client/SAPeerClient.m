@@ -18,13 +18,6 @@
 #import "RTCDataChannel+JSON.h"
 #import "RTCPeerConnection+StateString.h"
 
-typedef NS_ENUM(NSUInteger, SAPeerClientICEType) {
-    SAPeerClientICETypeCreateOffer,
-    SAPeerClientICETypeCreateAnswer,
-    SAPeerClientICETypeReceiveOffer,
-    SAPeerClientICETypeReceiveAnswer,
-};
-
 static NSString * const kSAPeerTwoPeerSignalingServerURL = @"ws://69.60.161.216:30002/signaling";
 
 @interface SAPeerClient ()
@@ -40,6 +33,8 @@ SADataSenderDelegate
     
     SAWebSocketChannel *mWebSocketChannel;
     BOOL mSignalingServerOpened;
+    
+    BOOL mJoinedRoomShouldCreateOffer;
     
     RTCPeerConnectionFactory * mFactory;
     RTCPeerConnection * mCurrentPeerConnection;
@@ -79,6 +74,7 @@ SADataSenderDelegate
 - (void)initializationPeerClient
 {
     mSignalingServerOpened = NO;
+    mJoinedRoomShouldCreateOffer = NO;
     mShouldSendWaitingData = NO;
     mShouldCheckIfSendWaitingData = NO;
     
@@ -88,6 +84,8 @@ SADataSenderDelegate
     mFactory = [[RTCPeerConnectionFactory alloc] init];
     
     mCacheData = [SAData data];
+    
+    [self createPeerConnection];
 }
 
 #pragma mark -
@@ -147,6 +145,7 @@ SADataSenderDelegate
         if (roomId && roomId.length > 0)
         {
             mCurrentRoom = roomId;
+            mJoinedRoomShouldCreateOffer = YES;
             [mWebSocketChannel joinForRoomId:roomId];
         }
         else
@@ -399,6 +398,8 @@ SADataSenderDelegate
             if (!mCurrentDataChannel)
             {
                 mCurrentDataChannel = dataChannel;
+                mCurrentDataChannel.delegate = self;
+                NSLog(@"Set up mCurrentDataChannel");
             }
             self.dataChannelState = kSAPeerClientDataChannelStateConnected;
         }
@@ -421,6 +422,8 @@ SADataSenderDelegate
 #pragma mark - RTCDataChannelDelegate
 - (void)dataChannelDidChangeState:(RTCDataChannel *)dataChannel
 {
+    NSLog(@"%s", __func__);
+    
     switch (dataChannel.readyState)
     {
         case RTCDataChannelStateConnecting:
@@ -602,7 +605,7 @@ SADataSenderDelegate
     {
         RTCDataChannelConfiguration * dataChannelConfiguration = [[RTCDataChannelConfiguration alloc] init];
         dataChannelConfiguration.isOrdered = YES;
-        dataChannelConfiguration.channelId = 100;
+//        dataChannelConfiguration.channelId = 100;
         dataChannelConfiguration.isNegotiated = NO;
         
         NSString * label = [NSString stringWithFormat:@"datachannel_%@", mCurrentRoom];
@@ -691,10 +694,12 @@ SADataSenderDelegate
 
 - (void)joinedRoom
 {
-    NSLog(@"++++++");
-    [self createPeerConnection];
-    [self createDataChannel];
-    [self createOffer];
+    if (mJoinedRoomShouldCreateOffer)
+    {
+        mJoinedRoomShouldCreateOffer = NO;
+        [self createDataChannel];
+        [self createOffer];
+    }
 }
 
 - (void)receiveSessionDescriptionMessage:(SASessionDescriptionMessage *)message
