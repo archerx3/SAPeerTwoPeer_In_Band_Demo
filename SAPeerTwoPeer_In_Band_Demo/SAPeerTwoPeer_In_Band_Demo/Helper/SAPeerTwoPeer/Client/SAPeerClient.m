@@ -16,6 +16,14 @@
 
 #import "RTCIceServer+JSON.h"
 #import "RTCDataChannel+JSON.h"
+#import "RTCPeerConnection+StateString.h"
+
+typedef NS_ENUM(NSUInteger, SAPeerClientICEType) {
+    SAPeerClientICETypeCreateOffer,
+    SAPeerClientICETypeCreateAnswer,
+    SAPeerClientICETypeReceiveOffer,
+    SAPeerClientICETypeReceiveAnswer,
+};
 
 static NSString * const kSAPeerTwoPeerSignalingServerURL = @"ws://69.60.161.216:30002/signaling";
 
@@ -378,6 +386,7 @@ SADataSenderDelegate
 - (void)peerConnection:(RTCPeerConnection *)peerConnection didOpenDataChannel:(RTCDataChannel *)dataChannel
 {
     NSLog(@"%s", __func__);
+    
     switch (dataChannel.readyState)
     {
         case RTCDataChannelStateConnecting:
@@ -387,6 +396,10 @@ SADataSenderDelegate
             break;
         case RTCDataChannelStateOpen:
         {
+            if (!mCurrentDataChannel)
+            {
+                mCurrentDataChannel = dataChannel;
+            }
             self.dataChannelState = kSAPeerClientDataChannelStateConnected;
         }
             break;
@@ -577,12 +590,20 @@ SADataSenderDelegate
                                                            constraints:[self defaultConstraints]
                                                               delegate:self];
     
+    if (!mCurrentPeerConnection)
+    {
+        NSLog(@"Create peer connection failed!");
+    }
+}
+
+- (void)createDataChannel
+{
     if (mCurrentPeerConnection)
     {
         RTCDataChannelConfiguration * dataChannelConfiguration = [[RTCDataChannelConfiguration alloc] init];
         dataChannelConfiguration.isOrdered = YES;
         dataChannelConfiguration.channelId = 100;
-        dataChannelConfiguration.isNegotiated = YES;
+        dataChannelConfiguration.isNegotiated = NO;
         
         NSString * label = [NSString stringWithFormat:@"datachannel_%@", mCurrentRoom];
         
@@ -597,6 +618,10 @@ SADataSenderDelegate
         {
             NSLog(@"Create data channel failed");
         }
+    }
+    else
+    {
+        NSLog(@"mCurrentPeerConnection is nil!");
     }
 }
 
@@ -641,12 +666,11 @@ SADataSenderDelegate
                                            
                                            if (error)
                                            {
-                                               NSLog(@"%s\nSet local sdp failed!\n%@", __func__, error.localizedDescription);
+                                               NSLog(@"\n%s\nSet local sdp failed!%@", __func__, error.localizedDescription);
                                            }
                                            else
                                            {
                                                [weakSelf sendSessionDescription:sdp];
-                                               
                                            }
                                            
                                        }];
@@ -667,7 +691,9 @@ SADataSenderDelegate
 
 - (void)joinedRoom
 {
+    NSLog(@"++++++");
     [self createPeerConnection];
+    [self createDataChannel];
     [self createOffer];
 }
 
@@ -677,12 +703,10 @@ SADataSenderDelegate
     
     if (type == kSASignalingMessageTypeAnswer)
     {
-        NSLog(@"Receice answer");
         [self receiveAnswerMessage:message];
     }
     else if (type == kSASignalingMessageTypeOffer)
     {
-        NSLog(@"Receice offer");
         [self receiveOfferMessage:message];
     }
 }
@@ -694,6 +718,8 @@ SADataSenderDelegate
         [self createPeerConnection];
     }
     
+    NSLog(@"Receice offer");
+    NSLog(@"%s\n signaling state of current peer connetion is : %@", __func__, [mCurrentPeerConnection getSignalingStateString]);
     __weak SAPeerClient * weakSelf = self;
     [mCurrentPeerConnection setRemoteDescription:message.sessionDescription
                                completionHandler:^(NSError * _Nullable error) {
@@ -717,6 +743,8 @@ SADataSenderDelegate
         NSLog(@"%s\nmCurrentPeerConnection is nil", __func__);
     }
     
+    NSLog(@"Receice answer");
+    NSLog(@"%s\n signaling state of current peer connetion is : %@", __func__, [mCurrentPeerConnection getSignalingStateString]);
     [mCurrentPeerConnection setRemoteDescription:message.sessionDescription
                                completionHandler:^(NSError * _Nullable error) {
         

@@ -64,6 +64,7 @@
 		AF2FDCC01EE7A94C004BEFEF /* SAVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF2FDCB71EE7A94C004BEFEF /* SAVideoCell.m */; };
 		AF2FDCC51EE7A95D004BEFEF /* RoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF2FDCC21EE7A95D004BEFEF /* RoomViewController.m */; };
 		AF2FDCC61EE7A95D004BEFEF /* SABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF2FDCC41EE7A95D004BEFEF /* SABaseViewController.m */; };
+		AF2FDCC91EE7B583004BEFEF /* RTCPeerConnection+StateString.m in Sources */ = {isa = PBXBuildFile; fileRef = AF2FDCC81EE7B583004BEFEF /* RTCPeerConnection+StateString.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -179,6 +180,8 @@
 		AF2FDCC21EE7A95D004BEFEF /* RoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomViewController.m; sourceTree = "<group>"; };
 		AF2FDCC31EE7A95D004BEFEF /* SABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SABaseViewController.h; sourceTree = "<group>"; };
 		AF2FDCC41EE7A95D004BEFEF /* SABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SABaseViewController.m; sourceTree = "<group>"; };
+		AF2FDCC71EE7B583004BEFEF /* RTCPeerConnection+StateString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCPeerConnection+StateString.h"; sourceTree = "<group>"; };
+		AF2FDCC81EE7B583004BEFEF /* RTCPeerConnection+StateString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RTCPeerConnection+StateString.m"; sourceTree = "<group>"; };
 		F5366893EAB51DD5F1B0421E /* Pods_SAPeerTwoPeer_In_Band_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SAPeerTwoPeer_In_Band_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -363,6 +366,8 @@
 				AF2FDC601EE7A911004BEFEF /* UIApplication+CPU.m */,
 				AF2FDC611EE7A911004BEFEF /* UIImage+Utilities.h */,
 				AF2FDC621EE7A911004BEFEF /* UIImage+Utilities.m */,
+				AF2FDCC71EE7B583004BEFEF /* RTCPeerConnection+StateString.h */,
+				AF2FDCC81EE7B583004BEFEF /* RTCPeerConnection+StateString.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -686,6 +691,7 @@
 				AF2FDC8D1EE7A911004BEFEF /* NSString+MIMEType.m in Sources */,
 				AF2FDCBE1EE7A94C004BEFEF /* SAImageCell.m in Sources */,
 				AF2FDCA01EE7A911004BEFEF /* THBinder.m in Sources */,
+				AF2FDCC91EE7B583004BEFEF /* RTCPeerConnection+StateString.m in Sources */,
 				AF2FDC941EE7A911004BEFEF /* UIApplication+CPU.m in Sources */,
 				AF2FDC971EE7A911004BEFEF /* SABitrateTracker.m in Sources */,
 				AF2FDC131EE7A499004BEFEF /* main.m in Sources */,
@@ -816,6 +822,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9RF2YHXSY2;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SAPeerTwoPeer_In_Band_Demo",
@@ -834,6 +841,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9RF2YHXSY2;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SAPeerTwoPeer_In_Band_Demo",

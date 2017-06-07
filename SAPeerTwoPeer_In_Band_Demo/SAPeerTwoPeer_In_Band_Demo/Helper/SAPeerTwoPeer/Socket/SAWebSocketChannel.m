@@ -104,7 +104,7 @@ static NSString const *kSAWSSMessageJoinRoomKey = @"ENTERROOM";
         
         [mSocket send:messageString];
         
-        NSLog(@"%s\nSend message : %@", __func__, message);
+//        NSLog(@"%s\nSend message : %@", __func__, message);
     }
     else
     {
