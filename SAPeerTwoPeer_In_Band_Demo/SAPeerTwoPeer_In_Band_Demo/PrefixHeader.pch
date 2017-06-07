@@ -1,0 +1,22 @@
+//
+//  PrefixHeader.pch
+//  SAPeerTwoPeer_In_Band_Demo
+//
+//  Created by archer.chen on 6/7/17.
+//  Copyright © 2017 archer.chen. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+#import <WebRTC/WebRTC.h>
+#import <Masonry/Masonry.h>
+#import <SocketRocket/SocketRocket.h>
+#import <IQKeyboardManager/IQKeyboardManager.h>
+#import <QBImagePickerController/QBImagePickerController.h>
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import "NSDictionary+JSON.h"
+#import "UIApplication+CPU.h"
+
+#endif /* PrefixHeader_pch */
