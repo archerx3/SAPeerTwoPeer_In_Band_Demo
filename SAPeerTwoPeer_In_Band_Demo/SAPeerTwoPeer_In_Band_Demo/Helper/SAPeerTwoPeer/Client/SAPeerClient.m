@@ -81,6 +81,8 @@ SADataSenderDelegate
     NSURL * signalingServerURL = [NSURL URLWithString:kSAPeerTwoPeerSignalingServerURL];
     mWebSocketChannel = [[SAWebSocketChannel alloc] initWithURL:signalingServerURL delegate:self];
     
+//    RTCSetMinDebugLogLevel(RTCLoggingSeverityVerbose);
+    
     mFactory = [[RTCPeerConnectionFactory alloc] init];
     
     mCacheData = [SAData data];
@@ -342,7 +344,7 @@ SADataSenderDelegate
     
     if (dataChannelIsClosed)
     {
-        self.dataChannelState = kSAPeerClientDataChannelStateDisconnected;
+//        self.dataChannelState = kSAPeerClientDataChannelStateDisconnected;
     }
 }
 
@@ -384,12 +386,12 @@ SADataSenderDelegate
 
 - (void)peerConnection:(RTCPeerConnection *)peerConnection didOpenDataChannel:(RTCDataChannel *)dataChannel
 {
-    NSLog(@"%s", __func__);
-    
     switch (dataChannel.readyState)
     {
         case RTCDataChannelStateConnecting:
         {
+            NSLog(@"%s RTCDataChannelStateConnecting", __func__);
+            
             self.dataChannelState = kSAPeerClientDataChannelStateConnecting;
         }
             break;
@@ -399,7 +401,7 @@ SADataSenderDelegate
             {
                 mCurrentDataChannel = dataChannel;
                 mCurrentDataChannel.delegate = self;
-                NSLog(@"Set up mCurrentDataChannel");
+                NSLog(@"%s\nSet up mCurrentDataChannel", __func__);
             }
             self.dataChannelState = kSAPeerClientDataChannelStateConnected;
         }
@@ -608,7 +610,7 @@ SADataSenderDelegate
 //        dataChannelConfiguration.channelId = 100;
         dataChannelConfiguration.isNegotiated = NO;
         
-        NSString * label = [NSString stringWithFormat:@"datachannel_%@", mCurrentRoom];
+        NSString * label = [NSString stringWithFormat:@"datachannel_%@caller", mCurrentRoom];
         
         mCurrentDataChannel = [mCurrentPeerConnection dataChannelForLabel:label configuration:dataChannelConfiguration];
         
