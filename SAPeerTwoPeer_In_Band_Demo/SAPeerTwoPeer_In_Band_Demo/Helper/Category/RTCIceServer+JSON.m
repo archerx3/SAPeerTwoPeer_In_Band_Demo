@@ -35,7 +35,6 @@
                             @"stun:stun.xten.com",
                             @"stun:23.21.150.121",
                             @"stun:69.60.161.216"];
-
     
     RTCIceServer * iceServer = [[RTCIceServer alloc] initWithURLStrings:stunServer];
     
