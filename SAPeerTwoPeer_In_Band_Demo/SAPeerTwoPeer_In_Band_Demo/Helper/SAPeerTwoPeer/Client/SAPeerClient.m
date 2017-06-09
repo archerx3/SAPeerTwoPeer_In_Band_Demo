@@ -344,7 +344,7 @@ SADataSenderDelegate
     
     if (dataChannelIsClosed)
     {
-//        self.dataChannelState = kSAPeerClientDataChannelStateDisconnected;
+        self.dataChannelState = kSAPeerClientDataChannelStateDisconnected;
     }
 }
 
@@ -386,6 +386,15 @@ SADataSenderDelegate
 
 - (void)peerConnection:(RTCPeerConnection *)peerConnection didOpenDataChannel:(RTCDataChannel *)dataChannel
 {
+    if (!dataChannel.delegate || ![dataChannel.delegate isEqual:self])
+    {
+        dataChannel.delegate = self;
+        mCurrentDataChannel = dataChannel;
+        NSLog(@"\ndata chanell : %@\ncurrent data channel : %@", dataChannel, mCurrentDataChannel);
+        
+        NSLog(@"%s\nSet up data Channel delegate", __func__);
+    }
+    
     switch (dataChannel.readyState)
     {
         case RTCDataChannelStateConnecting:
@@ -397,18 +406,15 @@ SADataSenderDelegate
             break;
         case RTCDataChannelStateOpen:
         {
-            if (!mCurrentDataChannel)
-            {
-                mCurrentDataChannel = dataChannel;
-                mCurrentDataChannel.delegate = self;
-                NSLog(@"%s\nSet up mCurrentDataChannel", __func__);
-            }
+            NSLog(@"%s RTCDataChannelStateOpen", __func__);
+            
             self.dataChannelState = kSAPeerClientDataChannelStateConnected;
         }
             break;
         case RTCDataChannelStateClosing:
         {
             NSLog(@"%s RTCDataChannelStateClosing", __func__);
+        
             self.dataChannelState = kSAPeerClientDataChannelStateDisconnected;
         }
             break;
@@ -430,11 +436,19 @@ SADataSenderDelegate
     {
         case RTCDataChannelStateConnecting:
         {
+            NSLog(@"%s RTCDataChannelStateConnecting", __func__);
             self.dataChannelState = kSAPeerClientDataChannelStateConnecting;
         }
             break;
         case RTCDataChannelStateOpen:
         {
+            NSLog(@"%s RTCDataChannelStateOpen", __func__);
+            if (dataChannel != mCurrentDataChannel)
+            {
+                mCurrentDataChannel = dataChannel;
+                mCurrentDataChannel.delegate = self;
+            }
+            
             self.dataChannelState = kSAPeerClientDataChannelStateConnected;
         }
             break;

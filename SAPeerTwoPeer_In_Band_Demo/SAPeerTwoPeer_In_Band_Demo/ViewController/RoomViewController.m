@@ -222,6 +222,10 @@ typedef NS_ENUM(NSUInteger, SADataType) {
         }
             break;
         case kSAPeerClientDataChannelStateConnecting:
+        {
+            NSLog(@"Data channel is connectioning!");
+        }
+            break;
         case kSAPeerClientDataChannelStateDisconnected:
         {
             //
