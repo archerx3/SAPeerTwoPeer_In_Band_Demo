@@ -21,6 +21,7 @@
 @property (nonatomic, assign, readwrite) CGFloat estimatedHeight;
 @property (nonatomic, strong, readwrite) id content;
 @property (nonatomic, strong, readwrite) NSData * data;
+@property (nonatomic, strong, readwrite) NSString * name;
 
 @end
 
@@ -28,29 +29,30 @@
 
 @synthesize data = mData;
 
-+ (instancetype)dataModelWith:(NSString *)dataTypeString content:(id)content sourceType:(SADataModelSourceType)sourceType
++ (instancetype)dataModelWith:(NSString *)dataTypeString contentName:(NSString *)name content:(id)content sourceType:(SADataModelSourceType)sourceType
 {
-    return [[SADataModel alloc] initWithDataTypeString:dataTypeString content:content sourceType:sourceType];
+    return [[SADataModel alloc] initWithDataTypeString:dataTypeString contentName:name content:content sourceType:sourceType];
 }
 
-+ (instancetype)dataModelWith:(NSString *)dataTypeString data:(NSData *)data sourceType:(SADataModelSourceType)sourceType
++ (instancetype)dataModelWith:(NSString *)dataTypeString contentName:(NSString *)name data:(NSData *)data sourceType:(SADataModelSourceType)sourceType
 {
-    return [[SADataModel alloc] initWithDataTypeString:dataTypeString data:data sourceType:sourceType];
+    return [[SADataModel alloc] initWithDataTypeString:dataTypeString contentName:name data:data sourceType:sourceType];
 }
 
-- (instancetype)initWithDataTypeString:(NSString *)dataTypeString content:(id)content sourceType:(SADataModelSourceType)sourceType
+- (instancetype)initWithDataTypeString:(NSString *)dataTypeString contentName:(NSString *)name content:(id)content sourceType:(SADataModelSourceType)sourceType
 {
     if (self = [super init])
     {
         _dataTypeString = dataTypeString;
         _sourceType = sourceType;
         _content = content;
+        _name = name;
         [self initializationDataModel];
     }
     return self;
 }
 
-- (instancetype)initWithDataTypeString:(NSString *)dataTypeString data:(NSData *)data sourceType:(SADataModelSourceType)sourceType
+- (instancetype)initWithDataTypeString:(NSString *)dataTypeString contentName:(NSString *)name data:(NSData *)data sourceType:(SADataModelSourceType)sourceType
 {
     if (self = [super init])
     {
@@ -88,6 +90,14 @@
 - (void)setupThumbnailImageForVideo
 {
     
+}
+
+- (void)setupName:(NSString *)name
+{
+    if (![self.name isEqualToString:name])
+    {
+        self.name = name;
+    }
 }
 
 #pragma mark -- Private

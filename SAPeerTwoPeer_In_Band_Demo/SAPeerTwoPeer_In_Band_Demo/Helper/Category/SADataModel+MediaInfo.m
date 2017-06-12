@@ -57,7 +57,7 @@
             
             if (data)
             {
-                dataModel = [SADataModel dataModelWith:@"image" data:data sourceType:SADataModelSourceTypeLocal];
+                dataModel = [SADataModel dataModelWith:@"image" contentName:nil data:data sourceType:SADataModelSourceTypeLocal];
             }
         }
         
@@ -101,7 +101,7 @@
         
         if (data)
         {
-            dataModel = [SADataModel dataModelWith:@"video" data:data sourceType:SADataModelSourceTypeLocal];
+            dataModel = [SADataModel dataModelWith:@"video" contentName:nil data:data sourceType:SADataModelSourceTypeLocal];
         }
     }
     else if ([assetTypeNumber isEqualToNumber:@(3)])  // PHAssetMediaTypeAudio   = 3

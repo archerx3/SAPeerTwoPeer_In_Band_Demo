@@ -925,7 +925,7 @@ SADataSenderDelegate
 
 - (void)dataReceiveCompleted
 {
-    SADataModel * dataModel = [SADataModel dataModelWith:mCacheData.dataType data:mCacheData.data sourceType:SADataModelSourceTypeRemote];
+    SADataModel * dataModel = [SADataModel dataModelWith:mCacheData.dataType contentName:mCacheData.name data:mCacheData.data sourceType:SADataModelSourceTypeRemote];
     
     [mCacheData clearData];
     

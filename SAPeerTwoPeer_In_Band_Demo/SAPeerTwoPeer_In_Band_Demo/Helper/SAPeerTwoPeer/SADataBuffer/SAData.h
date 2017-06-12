@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, SADataState) {
 @property (nonatomic, strong) NSString * dataType;
 @property (nonatomic) NSUInteger estimatedSize; 
 @property (nonatomic) SADataState state;
+@property (nonatomic, strong) NSString * name;
 
 + (instancetype)data;
 

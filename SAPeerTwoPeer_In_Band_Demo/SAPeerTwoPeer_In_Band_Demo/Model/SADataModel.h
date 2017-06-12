@@ -43,6 +43,7 @@ typedef NS_ENUM(NSUInteger, SADataModelSourceType) {
 @property (nonatomic, readonly) SADataModelType dataType;
 @property (nonatomic, readonly) SADataModelSourceType sourceType;
 @property (nonatomic, strong, readonly) NSString * dataTypeString;
+@property (nonatomic, strong, readonly) NSString * name; // Temporarily unused
 
 /**
  Record received data expected size
@@ -56,7 +57,7 @@ typedef NS_ENUM(NSUInteger, SADataModelSourceType) {
 
 @property (nonatomic, strong, readonly) NSData * data;
 
-+ (instancetype)dataModelWith:(NSString *)dataTypeString data:(NSData *)data sourceType:(SADataModelSourceType)sourceType;
++ (instancetype)dataModelWith:(NSString *)dataTypeString contentName:(NSString *)name data:(NSData *)data sourceType:(SADataModelSourceType)sourceType;
 
 - (void)setupThumbnailImageForVideo;
 
