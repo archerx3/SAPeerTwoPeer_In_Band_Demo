@@ -11,6 +11,8 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UIButton *clearCacheButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *RoomNumberLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
@@ -53,6 +55,10 @@
     [self jumpToRoomViewController];
 }
 
+- (IBAction)clearCacheButtonAction:(UIButton *)sender
+{
+    
+}
 
 #pragma mark -
 - (void)jumpToRoomViewController

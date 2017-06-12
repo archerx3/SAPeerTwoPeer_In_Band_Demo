@@ -109,6 +109,15 @@
         
     }
     
+    if ([fileManager removeItemAtPath:tempPath error:&error])
+    {
+        NSLog(@"Remove item successfully");
+    }
+    else
+    {
+        NSLog(@"Remove item Unsuccessfully");
+    }
+    
     return dataModel;
 }
 

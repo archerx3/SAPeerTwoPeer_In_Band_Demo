@@ -388,8 +388,8 @@ SADataSenderDelegate
 {
     if (!dataChannel.delegate || ![dataChannel.delegate isEqual:self])
     {
-        dataChannel.delegate = self;
         mCurrentDataChannel = dataChannel;
+        mCurrentDataChannel.delegate = self;
         NSLog(@"\ndata chanell : %@\ncurrent data channel : %@", dataChannel, mCurrentDataChannel);
         
         NSLog(@"%s\nSet up data Channel delegate", __func__);

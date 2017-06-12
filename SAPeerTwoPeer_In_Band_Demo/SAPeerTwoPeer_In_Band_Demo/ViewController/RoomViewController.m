@@ -265,7 +265,10 @@ typedef NS_ENUM(NSUInteger, SADataType) {
 {
     NSArray * dataModels = [SADataModel dataModelWithMediaInfos:mediaInfos];
     
-    [self sendDataModel:dataModels.firstObject];
+    if (dataModels.count > 0)
+    {
+        [self sendDataModel:dataModels.firstObject];
+    }
 }
 
 - (void)imagePickerHandlerDidCancel:(SAImagePickerHandler *)handler
@@ -458,8 +461,11 @@ typedef NS_ENUM(NSUInteger, SADataType) {
 
 - (void)sendDataModel:(SADataModel *)dataModel
 {
-    [self addDataModelsToDataSource:@[dataModel]];
-    [mPeerClient sendData:dataModel];
+    if (dataModel)
+    {
+        [self addDataModelsToDataSource:@[dataModel]];
+        [mPeerClient sendData:dataModel];
+    }
 }
 
 #pragma mark - Memory Warning

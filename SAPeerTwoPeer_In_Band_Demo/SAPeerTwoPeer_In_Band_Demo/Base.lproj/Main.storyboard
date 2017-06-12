@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -59,6 +60,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eaa-7x-rah">
+                                <rect key="frame" x="329" y="20" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ZQQ-1b-SQ4"/>
+                                    <constraint firstAttribute="width" constant="30" id="k1n-be-DrU"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="Icon-CleanCache"/>
+                                <connections>
+                                    <action selector="clearCacheButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ohZ-tg-VpD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -66,17 +78,20 @@
                             <constraint firstItem="s8c-Az-C20" firstAttribute="leading" secondItem="3bl-8k-M61" secondAttribute="trailing" constant="8" id="R29-oV-lue"/>
                             <constraint firstAttribute="trailing" secondItem="s8c-Az-C20" secondAttribute="trailing" constant="52" id="Se2-8r-1AD"/>
                             <constraint firstItem="3bl-8k-M61" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="200" id="VUj-yE-H2H"/>
+                            <constraint firstItem="eaa-7x-rah" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Vf6-hh-R0N"/>
                             <constraint firstItem="3bl-8k-M61" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="YGs-VJ-en7"/>
                             <constraint firstItem="vmS-gP-yVI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="100" id="Ydm-2I-yxt"/>
                             <constraint firstItem="s8c-Az-C20" firstAttribute="centerY" secondItem="3bl-8k-M61" secondAttribute="centerY" id="eND-ew-ztD"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="vmS-gP-yVI" secondAttribute="bottom" constant="50" id="fHs-rr-0iQ"/>
                             <constraint firstAttribute="trailing" secondItem="ULN-ao-d6C" secondAttribute="trailing" constant="100" id="iCH-TP-hda"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eaa-7x-rah" secondAttribute="trailing" id="t1B-yU-wev"/>
                             <constraint firstItem="vmS-gP-yVI" firstAttribute="top" secondItem="ULN-ao-d6C" secondAttribute="bottom" constant="50" id="wnB-sJ-tsb"/>
                             <constraint firstItem="ULN-ao-d6C" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="100" id="x5D-Ea-2Ia"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="RoomNumberLabel" destination="3bl-8k-M61" id="Nka-nK-GNT"/>
+                        <outlet property="clearCacheButton" destination="eaa-7x-rah" id="lRU-BV-zfj"/>
                         <outlet property="createRoomButton" destination="ULN-ao-d6C" id="cRm-dv-pqR"/>
                         <outlet property="joinRoomButton" destination="vmS-gP-yVI" id="mit-u5-tya"/>
                         <outlet property="textField" destination="s8c-Az-C20" id="alm-4X-3lB"/>
@@ -86,4 +101,7 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="Icon-CleanCache" width="32" height="32"/>
+    </resources>
 </document>
