@@ -99,23 +99,12 @@ SADataSenderDelegate
         mSignalingChannelState = signalingChannelState;
         
         [self checkSignalingChannelState];
-        
-        if (mDelegate && [mDelegate respondsToSelector:@selector(peerClient:didChangeSignalingChannelState:)])
-        {
-            [mDelegate peerClient:self didChangeSignalingChannelState:mSignalingChannelState];
-        }
-    }
-    else
-    {
-        if (mSignalingChannelState == kSAPeerClientSignalingChannelStateDisconnected)
-        {
-            if (mDelegate && [mDelegate respondsToSelector:@selector(peerClient:didChangeSignalingChannelState:)])
-            {
-                [mDelegate peerClient:self didChangeSignalingChannelState:mSignalingChannelState];
-            }
-        }
     }
     
+    if (mDelegate && [mDelegate respondsToSelector:@selector(peerClient:didChangeSignalingChannelState:)])
+    {
+        [mDelegate peerClient:self didChangeSignalingChannelState:mSignalingChannelState];
+    }
 }
 
 - (void)setDataChannelState:(SAPeerClientDataChannelState)dataChannelState
@@ -123,11 +112,11 @@ SADataSenderDelegate
     if (mDataChannelState != dataChannelState)
     {
         mDataChannelState = dataChannelState;
-        
-        if (mDelegate && [mDelegate respondsToSelector:@selector(peerClient:didChangeDataChannelState:)])
-        {
-            [mDelegate peerClient:self didChangeDataChannelState:mDataChannelState];
-        }
+    }
+    
+    if (mDelegate && [mDelegate respondsToSelector:@selector(peerClient:didChangeDataChannelState:)])
+    {
+        [mDelegate peerClient:self didChangeDataChannelState:mDataChannelState];
     }
 }
 
@@ -622,7 +611,7 @@ SADataSenderDelegate
         RTCDataChannelConfiguration * dataChannelConfiguration = [[RTCDataChannelConfiguration alloc] init];
         dataChannelConfiguration.isOrdered = YES;
 //        dataChannelConfiguration.channelId = 100;
-        dataChannelConfiguration.isNegotiated = NO;
+        dataChannelConfiguration.isNegotiated = NO; // if No, in-band negotiated; If Yes, out-of-band negotiated.
         
         NSString * label = [NSString stringWithFormat:@"datachannel_%@caller", mCurrentRoom];
         
