@@ -1,0 +1,21 @@
+PODS:
+  - IQKeyboardManager (4.0.10)
+  - Masonry (1.0.2)
+  - QBImagePickerController (3.4.0)
+  - SocketRocket (0.5.1)
+
+DEPENDENCIES:
+  - IQKeyboardManager
+  - Masonry
+  - QBImagePickerController
+  - SocketRocket
+
+SPEC CHECKSUMS:
+  IQKeyboardManager: 593ee99b88381f4b9ccb22bd680f22606351bd41
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
+  SocketRocket: d57c7159b83c3c6655745cd15302aa24b6bae531
+
+PODFILE CHECKSUM: e1cdfc0af8f71ca9eac3a34c7cae0701f315e59b
+
+COCOAPODS: 1.2.1
