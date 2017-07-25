@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define SADataChannelBufferChunkSize 250*1024
+#define SADataChannelBufferChunkSize 16*1024
 
 typedef NS_ENUM(NSUInteger, SADataBufferState) {
     
