@@ -320,7 +320,7 @@
     CGFloat totalSize = mDataBuffer.totalSize;
 
     CGFloat progress = hadSendSize / totalSize;
-    NSLog(@"Send progress:%.2f%%", progress * 100);
+    NSLog(@"Send progress:%.2f%%, cup : %.2ld", progress * 100, (long)SAGetCpuUsagePercentage());
 
     if ([mDelegate respondsToSelector:@selector(dataSender:didSendProgress:)])
     {

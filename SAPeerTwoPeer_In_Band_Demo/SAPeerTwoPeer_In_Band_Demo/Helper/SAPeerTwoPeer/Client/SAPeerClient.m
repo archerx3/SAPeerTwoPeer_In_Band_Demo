@@ -49,6 +49,8 @@ SADataSenderDelegate
     
     BOOL mShouldSendWaitingData;
     BOOL mShouldCheckIfSendWaitingData;
+    
+    NSTimeInterval mTime;
 }
 
 @end
@@ -775,6 +777,11 @@ SADataSenderDelegate
     }
     else
     {
+        if (mTime == 0)
+        {
+            mTime = [[NSDate date] timeIntervalSince1970];
+        }
+        
         NSData * binaryData = dataBuffer.data;
         
         if (mCacheData.state == SADataStateBegin || mCacheData.state == SADataStateTransferring)
@@ -789,7 +796,7 @@ SADataSenderDelegate
             CGFloat completed = (CGFloat)mCacheData.data.length;
             CGFloat total = (CGFloat)mCacheData.estimatedSize;
             CGFloat progress = completed / total;
-            NSLog(@"Receive progress : %.2f%%", progress * 100);
+            NSLog(@"Receive progress : %.2f%%, speed : %.2f, cup : %.2ld", progress * 100, completed / ([[NSDate date] timeIntervalSince1970] - mTime), (long)SAGetCpuUsagePercentage());
             
             [self callBackReceiveProgress:progress];
             
@@ -800,6 +807,8 @@ SADataSenderDelegate
             else
             {
                 mCacheData.state = SADataStateCompleted;
+                
+                mTime = 0;
                 
                 RTCDataBuffer * offerDataBuffer = [mCurrentDataChannel CompletedOfferJSONStringWithData:mCacheData];
                 [mCurrentDataChannel sendData:offerDataBuffer];
@@ -826,6 +835,9 @@ SADataSenderDelegate
                 [mCurrentDataChannel sendData:answerDataBuffer];
                 
                 mCacheData.estimatedSize = [mCurrentDataChannel estimatedSizeWithData:dataBuffer];
+                
+                NSLog(@"size : %ld", mCacheData.estimatedSize);
+                
                 mCacheData.dataType = [mCurrentDataChannel dataTypeStringWithData:dataBuffer];
                 mCacheData.state = SADataStateBegin;
             }
@@ -842,13 +854,13 @@ SADataSenderDelegate
             {
                 RTCDataBuffer * answerDataBuffer = [mCurrentDataChannel CompletedAnswerJSONStringWithData:dataBuffer];
                 [mCurrentDataChannel sendData:answerDataBuffer];
-                NSLog(@"%@ data send complete!", mDataSender.dataModel.dataTypeString);
+                NSLog(@"%@ data send complete! Size : %ld", mDataSender.dataModel.dataTypeString, mDataSender.dataModel.data.length);
                 [mDataSender clearDataModel];
             }
                 break;
             case SADataBufferTypeCompletedAnswer:
             {
-                NSLog(@"%@ data receive complete!", mCacheData.dataType);
+                NSLog(@"%@ data receive complete! Size : %ld", mCacheData.dataType, mCacheData.estimatedSize);
                 [self dataReceiveCompleted];
             }
                 break;
